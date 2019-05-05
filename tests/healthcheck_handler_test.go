@@ -5,6 +5,9 @@ import (
     "net/http/httptest"
     "testing"
     h "../handlers"
+    "fmt"
+    "io/ioutil"
+    "strings"
 )
 
 func TestHealthCheckHandler(t *testing.T) {
@@ -30,7 +33,9 @@ func TestHealthCheckHandler(t *testing.T) {
     }
 
     // Check the response body is what we expect.
-    expected := `{"alive": true}`
+    version, _ := ioutil.ReadFile("../VERSION")
+    v := strings.TrimSpace(string(version))
+    expected := fmt.Sprintf("{\"version\": \"%s\", \"service\": \"babystep-api-gateway\"}", v)
     if rr.Body.String() != expected {
         t.Errorf("handler returned unexpected body: got %v want %v",
             rr.Body.String(), expected)
