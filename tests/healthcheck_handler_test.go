@@ -33,7 +33,7 @@ func TestHealthCheckHandler(t *testing.T) {
     }
 
     // Check the response body is what we expect.
-    version, _ := ioutil.ReadFile("../VERSION")
+    version, _ := ioutil.ReadFile("./VERSION")
     v := strings.TrimSpace(string(version))
     expected := fmt.Sprintf("{\"version\": \"%s\", \"service\": \"babystep-api-gateway\"}", v)
     if rr.Body.String() != expected {

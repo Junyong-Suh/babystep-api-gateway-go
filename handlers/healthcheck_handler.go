@@ -12,7 +12,7 @@ func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
     // A very simple health check.
     w.Header().Set("Content-Type", "application/json")
     w.WriteHeader(http.StatusOK)
-    version, _ := ioutil.ReadFile("../VERSION")
+    version, _ := ioutil.ReadFile("./VERSION")
     v := strings.TrimSpace(string(version))
 
     // In the future we could report back on the status of our DB, or our cache
