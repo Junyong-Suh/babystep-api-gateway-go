@@ -27,6 +27,7 @@ func main() {
     // Routes consist of a path and a handler function.
     r.HandleFunc("/", h.RootHandler)
     r.HandleFunc("/health", h.HealthcheckHandler)
+    r.HandleFunc("/echo", h.EchoHandler)
     port := "8080"
 
     srv := &http.Server{
