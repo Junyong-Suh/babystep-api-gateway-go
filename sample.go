@@ -13,5 +13,5 @@ func main() {
     r.HandleFunc("/", h.RootHandler)
 
     // Bind to a port and pass our router in
-    log.Fatal(http.ListenAndServe(":8000", r))
+    log.Fatal(http.ListenAndServe(":8080", r))
 }

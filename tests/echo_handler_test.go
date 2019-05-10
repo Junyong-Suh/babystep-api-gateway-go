@@ -1,12 +1,22 @@
 package main
 
 import (
+    "encoding/json"
     "net/http"
     "net/http/httptest"
     "testing"
-    "encoding/json"
+
     h "../handlers"
 )
+
+type echo_response struct {
+    method  string      `json:"method"`
+    path    string      `json:"path"`
+    args    string      `json:"args"`
+    body    string      `json:"body"`
+    headers []string    `json:"headers"`
+    uuid    string      `json:"uuid"`
+}
 
 func TestEchoHandler(t *testing.T) {
     // Create a request to pass to our handler. We don't have any query parameters for now, so we'll
