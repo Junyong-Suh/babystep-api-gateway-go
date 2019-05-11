@@ -1,10 +1,12 @@
 package main
 
 import (
-    "encoding/json"
     "net/http"
     "net/http/httptest"
     "testing"
+    "fmt"
+
+    "github.com/thedevsaddam/govalidator"
 
     h "../handlers"
 )
@@ -41,9 +43,33 @@ func TestEchoHandler(t *testing.T) {
     }
 
     // Check the response body is what we expect.
-    expected := `Hello`
-    if rr.Body.String() != expected {
-        t.Errorf("handler returned unexpected body: got %v want %v",
-            rr.Body.String(), expected)
-    }
+    // expected := `Hello`
+    // if rr.Body.String() != expected {
+    //     t.Errorf("handler returned unexpected body: got %v want %v",
+    //         rr.Body.String(), expected)
+    // }
+
+    rules := govalidator.MapData{
+        // "username": []string{"required", "between:3,8"},
+        // "email":    []string{"required", "min:4", "max:20", "email"},
+        // "web":      []string{"url"},
+        // "phone":    []string{"digits:11"},
+        // "agree":    []string{"bool"},
+        // "dob":      []string{"date"},
+        "method":   []string{"required"},
+        "path":     []string{"required"},
+        "args":     []string{"required"},
+        "body":     []string{"required"},
+        "headers":  []string{"required"},
+        "uuid":     []string{"required"},
+	}
+
+	opts := govalidator.Options{
+        Request:         req,      // request object
+        Rules:           rules,    // rules map
+        RequiredDefault: true,     // all the field to be pass the rules
+	}
+	v := govalidator.New(opts)
+	e := v.Validate()
+    fmt.Print(e)
 }
