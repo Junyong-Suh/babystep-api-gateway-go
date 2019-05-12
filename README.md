@@ -6,7 +6,6 @@ Babystep API gateway is a simple API gateway in Go
 $ go get -u github.com/thedevsaddam/govalidator
 $ go get -u github.com/gorilla/mux
 ```
-
 ## API documentation
 
 ### /
