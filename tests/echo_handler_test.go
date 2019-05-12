@@ -4,20 +4,31 @@ import (
     "net/http"
     "net/http/httptest"
     "testing"
-    "fmt"
-
-    "github.com/thedevsaddam/govalidator"
+    "encoding/json"
+    "reflect"
 
     h "../handlers"
 )
 
-type echo_response struct {
-    method  string      `json:"method"`
-    path    string      `json:"path"`
-    args    string      `json:"args"`
-    body    string      `json:"body"`
-    headers []string    `json:"headers"`
-    uuid    string      `json:"uuid"`
+type HttpHeaders struct {
+    HTTP_VERSION            string  `json:"HTTP_VERSION"`
+    HTTP_HOST               string  `json:"HTTP_HOST"`
+    HTTP_ACCEPT_ENCODING    string  `json:"HTTP_ACCEPT_ENCODING"`
+    HTTP_USER_AGENT         string  `json:"HTTP_USER_AGENT"`
+    HTTP_X_FORWARDED_FOR    string  `json:"HTTP_X_FORWARDED_FOR"`
+    HTTP_X_FORWARDED_HOST   string  `json:"HTTP_X_FORWARDED_HOST"`
+    HTTP_X_FORWARDED_PORT   string  `json:"HTTP_X_FORWARDED_PORT"`
+    HTTP_X_FORWARDED_PROTO  string  `json:"HTTP_X_FORWARDED_PROTO"`
+    HTTP_FORWARDED          string  `json:"HTTP_FORWARDED"`
+}
+
+type EchoResponse struct {
+    Method  string      `json:"method"`
+    Path    string      `json:"path"`
+    Args    string      `json:"args"`
+    Body    string      `json:"body"`
+    Headers HttpHeaders `json:"headers"`
+    Uuid    string      `json:"uuid"`
 }
 
 func TestEchoHandler(t *testing.T) {
@@ -42,34 +53,15 @@ func TestEchoHandler(t *testing.T) {
             status, http.StatusOK)
     }
 
-    // Check the response body is what we expect.
-    // expected := `Hello`
-    // if rr.Body.String() != expected {
-    //     t.Errorf("handler returned unexpected body: got %v want %v",
-    //         rr.Body.String(), expected)
-    // }
+    var echoResponse EchoResponse
+    json.Unmarshal([]byte(rr.Body.String()), &echoResponse)
 
-    rules := govalidator.MapData{
-        // "username": []string{"required", "between:3,8"},
-        // "email":    []string{"required", "min:4", "max:20", "email"},
-        // "web":      []string{"url"},
-        // "phone":    []string{"digits:11"},
-        // "agree":    []string{"bool"},
-        // "dob":      []string{"date"},
-        "method":   []string{"required"},
-        "path":     []string{"required"},
-        "args":     []string{"required"},
-        "body":     []string{"required"},
-        "headers":  []string{"required"},
-        "uuid":     []string{"required"},
-	}
-
-	opts := govalidator.Options{
-        Request:         req,      // request object
-        Rules:           rules,    // rules map
-        RequiredDefault: true,     // all the field to be pass the rules
-	}
-	v := govalidator.New(opts)
-	e := v.Validate()
-    fmt.Print(e)
+    if echoResponse.Method != "GET" ||
+        echoResponse.Path != "/" ||
+        echoResponse.Args != "" ||
+        echoResponse.Body != "" ||
+        reflect.TypeOf(echoResponse.Uuid).String() != "string" ||
+        reflect.TypeOf(echoResponse.Headers).String() != "main.HttpHeaders" {
+        t.Errorf("handler returned unexpected body: %v", rr.Body.String())
+    }
 }
