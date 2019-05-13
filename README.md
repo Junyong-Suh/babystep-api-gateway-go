@@ -22,6 +22,12 @@ $ docker run --rm -p 8080:8080 babystep-api-gateway-go:latest
 $ curl localhost:8080
 Hello
 ```
+or simply, download one from Dockerhub
+```
+$ docker run --rm -p 8080:8080 zechery/babystep-api-gateway-go:v0.0.1
+$ curl localhost:8080
+Hello
+```
 
 ## API documentation
 
