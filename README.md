@@ -3,9 +3,26 @@ Babystep API gateway is a simple API gateway in Go
 
 ## Dependencies
 ```
-$ go get -u github.com/thedevsaddam/govalidator
 $ go get -u github.com/gorilla/mux
 ```
+
+## To run
+
+### Native
+```
+$ go get -u github.com/gorilla/mux
+$ go build main.go
+$ go run main
+```
+
+### Docker
+```
+$ docker build -t babystep-api-gateway-go .
+$ docker run --rm -p 8080:8080 babystep-api-gateway-go:latest
+$ curl localhost:8080
+Hello
+```
+
 ## API documentation
 
 ### /
@@ -58,7 +75,6 @@ $go test ./tests
 ## Sample
 Sample code is from https://github.com/gorilla/mux#full-example
 ```
-$ go get -u github.com/thedevsaddam/govalidator
 $ go get -u github.com/gorilla/mux
 $ go build sample.go
 $ go run sample
