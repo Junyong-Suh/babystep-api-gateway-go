@@ -1,16 +1,10 @@
 # babystep-api-gateway-go
 Babystep API gateway is a simple API gateway in Go
 
-## Dependencies
-```
-$ go get -u github.com/gorilla/mux
-```
-
 ## To run
 
 ### Native
 ```
-$ go get -u github.com/gorilla/mux
 $ go build main.go
 $ go run main
 ```
@@ -76,17 +70,4 @@ $ curl localhost:8080/echo | jq
 As we keep all tests under ./tests folder, run following command to trigger unit tests
 ```
 $go test ./tests
-```
-
-## Sample
-Sample code is from https://github.com/gorilla/mux#full-example
-```
-$ go get -u github.com/gorilla/mux
-$ go build sample.go
-$ go run sample
-```
-'Hello world'-like server is running on localhost:8080
-```
-$ curl localhost:8080
-Hello
 ```
