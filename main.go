@@ -14,7 +14,7 @@ import (
 
     "github.com/gorilla/mux"
 
-    h "./handlers"
+    h "github.com/Junyong-Suh/babystep-api-gateway-go/handlers"
 )
 
 func main() {
