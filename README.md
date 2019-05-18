@@ -21,10 +21,10 @@ $ go test ./...
 ## API documentation
 
 ### /
-Returns a string "Hello"
+Returns a string {"message": "Hello"}
 ```
 $ curl localhost:8080
-Hello
+{"message": "Hello"}
 ```
 
 ### /health
