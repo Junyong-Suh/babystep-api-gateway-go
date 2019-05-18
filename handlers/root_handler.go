@@ -5,5 +5,7 @@ import (
 )
 
 func RootHandler(w http.ResponseWriter, r *http.Request) {
-    w.Write([]byte("Hello"))
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("{\"message\":\"Hello\"}"))
 }
