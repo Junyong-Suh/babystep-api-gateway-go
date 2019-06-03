@@ -16,6 +16,7 @@ $ go run .
 ## Test
 ```
 $ go test ./...
+$ go test ./... -coverprofile cp.out # with test coverage
 ```
 
 ## API documentation
